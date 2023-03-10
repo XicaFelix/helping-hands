@@ -4,9 +4,9 @@ class CreateMedications < ActiveRecord::Migration[6.1]
       t.string :name
       t.string :dosage
       t.string :unit
-      t.int :times_per_day
-      t.int :times_per_week
-      t.int :patient_id
+      t.integer :times_per_day
+      t.integer :times_per_week
+      t.integer :patient_id
       t.timestamps
     end
   end
