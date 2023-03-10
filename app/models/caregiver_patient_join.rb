@@ -1,0 +1,2 @@
+class CaregiverPatientJoin < ApplicationRecord
+end
