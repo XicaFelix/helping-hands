@@ -9,6 +9,10 @@ medication_inhaler = ['albuterol', 'budesonide', 'ipratropium']
 
 dosage = ['15', '30', '25', '50', '100', '150', '200', '250']
 
+
+# Setting up suffixes for provider names
+suffix = ['MD', 'RN', 'LSW']
+
 # Creating Caregivers
 5.times do
     Caregiver.create(
@@ -81,3 +85,13 @@ medication_inhaler.each do |name|
 end
 
 # Creating Appointments
+20.times do 
+    Appointment.create(
+        provider_name: "#{Faker::Name.first_name} #{Faker::Name.last_name}, #{suffix.sample}",
+        date: Faker::Date.forward(days: 365),
+        time: "#{rand(9..17)}: #{[00, 15,30,45].sample}",
+        location: Faker::Address.full_address,
+        patient_id: Patient.all.sample.id
+    )
+
+end
