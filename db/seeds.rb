@@ -13,6 +13,13 @@ dosage = ['15', '30', '25', '50', '100', '150', '200', '250']
 # Setting up suffixes for provider names
 suffix = ['MD', 'RN', 'LSW']
 
+# Clearing Database before seeding
+Caregiver.destroy_all
+CaregiverPatientJoin.destroy_all
+Patient.destroy_all
+Medication.destroy_all
+Appointment.destroy_all
+
 # Creating Caregivers
 5.times do
     Caregiver.create(
@@ -27,7 +34,7 @@ end
 # Creating Patients
 11.times do
     Patient.create(
-        name: Faker::Nane.name,
+        name: Faker::Name.name,
         age: rand(1..102),
         avatar_url: Faker::Avatar.image(size: '100x100')
     )
@@ -53,8 +60,8 @@ medications_pill.each do |name|
         name: name,
         dosage: dosage.sample(),
         unit: 'mg',
-        times_per_day: rand(1..3),
-        times_per_week: rand(1..7),
+        times_per_day: Faker::Number.between(from: 1, to: 3),
+        times_per_week: Faker::Number.between(from: 1, to: 7),
         patient_id: Patient.all.sample.id
     )
 
@@ -66,8 +73,8 @@ medications_injections.each do |name|
         name: name,
         dosage: dosage.sample(),
         unit: 'ml',
-        times_per_day: rand(1..3),
-        times_per_week: rand(1..7),
+        times_per_day: Faker::Number.between(from: 1, to: 3),
+        times_per_week: Faker::Number.between(from: 1, to: 7),
         patient_id: Patient.all.sample.id
     )
 end
@@ -77,9 +84,9 @@ medication_inhaler.each do |name|
     Medication.create(
         name: name,
         dosage: rand(1..3),
-        unit: 'puff'
-        times_per_day: rand(1..2),
-        times_per_week: rand(1..7),
+        unit: 'puff',
+        times_per_day: Faker::Number.between(from: 1, to: 3),
+        times_per_week: Faker::Number.between(from: 1, to: 7),
         patient_id: Patient.all.sample.id
     )
 end
