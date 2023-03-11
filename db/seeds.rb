@@ -22,10 +22,10 @@ Appointment.destroy_all
 
 # Creating Caregivers
 5.times do
-    Caregiver.create(
+    Caregiver.create!(
         username: Faker::Internet.username,
         password_digest: "",
-        name: Faker::Name.name,
+        person_name: Faker::Name.name,
         age: rand(18..85),
         avatar_url: Faker::Avatar.image(size: '100x100')
     )
@@ -34,7 +34,7 @@ end
 # Creating Patients
 11.times do
     Patient.create(
-        name: Faker::Name.name,
+        person_name: Faker::Name.name,
         age: rand(1..102),
         avatar_url: Faker::Avatar.image(size: '100x100')
     )
