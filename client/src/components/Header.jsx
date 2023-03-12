@@ -10,6 +10,7 @@ function AppHeader(){
             <div className="logo">
                 <Image width={150} src={logo}/>
             </div>
+            
         </Header>
     )
 }
