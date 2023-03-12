@@ -1,6 +1,6 @@
 import { Form, Input, Button } from "antd";
 
-function LandingForm(){
+function SignUpForm(){
 
     return(
         <Form layout="inline" style={{margin:'11rem'}}>
@@ -17,4 +17,4 @@ function LandingForm(){
     );
 }
 
-export default LandingForm;
+export default SignUpForm;
