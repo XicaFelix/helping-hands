@@ -7,10 +7,10 @@ function LandingPageContent(){
     return(
         <Content>
             <div className='background-image' style={{ height:700, width:1000, margin:'auto', backgroundImage:`url(${backgroundImage})`, backgroundSize:'contain', backgroundRepeat:'no-repeat'}}>
-                <h1 style={{margin:'auto', width:'50%',  fontSize:40}}>Be the #1 Caregiver!</h1>
-                <Space align='center' style={{margin: 'auto', height:'80%'}}>
-                    <Button>Login</Button>
-                    <Button>SignUp</Button>
+                <h1 style={{margin:'auto', width:'50%', fontSize:40}}>Be the #1 Caregiver!</h1>
+                <Space align='center' style={{marginLeft: '25rem', height:'80%', width: '50%'}}>
+                    <Button size='large'>Login</Button>
+                    <Button size='large'>SignUp</Button>
                 </Space>
             </div>
         </Content>

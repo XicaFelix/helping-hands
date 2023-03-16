@@ -8,7 +8,7 @@ function AppHeader(){
     return(
         <Header style={{height:150}}>
             <div className="logo">
-                <Image width={150} src={logo}/>
+                <Image width={150} src={logo} preview={false}/>
             </div>
             
         </Header>

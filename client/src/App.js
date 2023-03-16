@@ -2,6 +2,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import LandingPage from './components/LandingPage/LandingPage';
 import MainPage from './components/LoggedInPages/MainPage';
 import LogInPage from './components/LogIn/LoginPage';
+import EditPage from './components/MedicationCRUD/EditPage';
 
 import SignUpPage from './components/SignUp/SignUpPage';
 
@@ -27,6 +28,11 @@ function App() {
         path='/home'
         element={<MainPage/>}
         />
+
+      <Route
+        path='/edit'
+        element={<EditPage/>}
+        />  
     </Routes>
   );
 }
