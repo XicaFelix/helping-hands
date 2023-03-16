@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_10_173531) do
+ActiveRecord::Schema.define(version: 2023_03_16_213607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,13 +20,6 @@ ActiveRecord::Schema.define(version: 2023_03_10_173531) do
     t.string "date"
     t.string "time"
     t.string "location"
-    t.integer "patient_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "caregiver_patient_joins", force: :cascade do |t|
-    t.integer "caregiver_id"
     t.integer "patient_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -42,13 +35,19 @@ ActiveRecord::Schema.define(version: 2023_03_10_173531) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "medication_trackers", force: :cascade do |t|
+    t.integer "patient_id"
+    t.integer "medication_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "medications", force: :cascade do |t|
     t.string "name"
     t.string "dosage"
     t.string "unit"
     t.integer "times_per_day"
     t.integer "times_per_week"
-    t.integer "patient_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -56,6 +55,8 @@ ActiveRecord::Schema.define(version: 2023_03_10_173531) do
   create_table "patients", force: :cascade do |t|
     t.string "person_name"
     t.integer "age"
+    t.string "username"
+    t.string "password_digest"
     t.string "avatar_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

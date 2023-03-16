@@ -1,3 +1,4 @@
 class Medication < ApplicationRecord
-    belongs_to :patient
+    has_many :medicationtrackers
+    has_many :patients, through: :medicationtrackers
 end

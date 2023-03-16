@@ -14,42 +14,23 @@ dosage = ['15', '30', '25', '50', '100', '150', '200', '250']
 suffix = ['MD', 'RN', 'LSW']
 
 # Clearing Database before seeding
-Caregiver.destroy_all
-CaregiverPatientJoin.destroy_all
 Patient.destroy_all
 Medication.destroy_all
 Appointment.destroy_all
+MedicationTracker.destroy_all
 
-# Creating Caregivers
-5.times do
-    Caregiver.create!(
-        username: Faker::Internet.username,
-        password_digest: "",
-        person_name: Faker::Name.name,
-        age: rand(18..85),
-        avatar_url: Faker::Avatar.image(size: '100x100')
-    )
-end
 
 # Creating Patients
 11.times do
     Patient.create(
         person_name: Faker::Name.name,
+        username: Faker::Internet.username,
+        password_digest: "",
         age: rand(1..102),
         avatar_url: Faker::Avatar.image(size: '100x100')
     )
 
 end
-
-# Setting up the join table
-11.times do
-    CaregiverPatientJoin.create(
-        caregiver_id: Caregiver.all.sample.id,
-        patient_id: Patient.all.sample.id
-    )
-
-end
-
 
 
 # Creating Medications
@@ -62,7 +43,6 @@ medications_pill.each do |name|
         unit: 'mg',
         times_per_day: Faker::Number.between(from: 1, to: 3),
         times_per_week: Faker::Number.between(from: 1, to: 7),
-        patient_id: Patient.all.sample.id
     )
 
 end
@@ -75,7 +55,6 @@ medications_injections.each do |name|
         unit: 'ml',
         times_per_day: Faker::Number.between(from: 1, to: 3),
         times_per_week: Faker::Number.between(from: 1, to: 7),
-        patient_id: Patient.all.sample.id
     )
 end
 
@@ -87,7 +66,15 @@ medication_inhaler.each do |name|
         unit: 'puff',
         times_per_day: Faker::Number.between(from: 1, to: 3),
         times_per_week: Faker::Number.between(from: 1, to: 7),
-        patient_id: Patient.all.sample.id
+    )
+end
+
+
+# Setting up the join table
+20.times do 
+    MedicationTracker.create(
+        patient_id: Patient.all.sample.id,
+        medication_id: Medication.all.sample.id
     )
 end
 

@@ -1,4 +1,5 @@
 class Patient < ApplicationRecord
-    has_many :caregiverpatientjoins 
-    has_many :caregivers, through: :caregiverpatientjoins
+    has_many :appointments
+    has_many :medicationtrackers
+    has_many :medications, through: :medicationtrackers
 end

@@ -3,6 +3,8 @@ class CreatePatients < ActiveRecord::Migration[6.1]
     create_table :patients do |t|
       t.string :person_name
       t.integer :age
+      t.string :username
+      t.string :password_digest
       t.string :avatar_url
       
 

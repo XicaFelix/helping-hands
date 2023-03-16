@@ -6,7 +6,6 @@ class CreateMedications < ActiveRecord::Migration[6.1]
       t.string :unit
       t.integer :times_per_day
       t.integer :times_per_week
-      t.integer :patient_id
       t.timestamps
     end
   end
