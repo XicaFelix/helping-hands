@@ -1,17 +1,42 @@
+import { useState } from "react";
+
 import { Form, Input, Button } from "antd";
 
-function SignUpForm(){
+function SignUpForm({setPage, patient, setPatient}){
+
+    // setting up state to track patient first and last name 
+    const [name, setName] = useState({
+        firstName : '',
+        lastName : ''
+    })
+
+    // log changes to user info
+    function handleChange(event){
+        setName({...name, 
+            [event.target.name] : event.target.value
+        });
+    }
+
+    
+    function handleClick(){
+        let fullName = name.firstName + " " + name.lastName;
+        setPage(2);
+        setPatient({...patient,
+            name : fullName
+        });
+        console.log(patient);
+    }
 
     return(
         <Form layout="inline" style={{margin:'11rem'}}>
             <Form.Item label='First Name'>
-                <Input placeholder="First Name" />
+                <Input placeholder="First Name" name="firstName" value={name.firstName} onChange={handleChange}/>
             </Form.Item>
             <Form.Item label='Last Name'>
-                <Input placeholder="Last Name" />
+                <Input placeholder="Last Name" name="lastName" value={name.lastName} onChange={handleChange}/>
             </Form.Item>
             <Form.Item>
-                <Button type="primary">Next</Button>
+                <Button type="primary" onClick={handleClick}>Next</Button>
             </Form.Item>
         </Form>
     );
