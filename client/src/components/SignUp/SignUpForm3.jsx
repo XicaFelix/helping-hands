@@ -4,6 +4,15 @@ import {Form, Button, Input} from 'antd';
 
 function SignUpFormThree({setPage, patient, setPatient}){
 
+    // keep track of sign up errors
+    const [errors, setErrors]= useState([]);
+
+    function handleSubmit(event){
+        event.preventDefault();
+
+        fetch('http://localhost:4000/signup');
+    }
+
     // track user avatar_url
     function handleChange(event){
         setPatient({...patient,
