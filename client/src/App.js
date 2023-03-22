@@ -1,3 +1,5 @@
+import {  useState } from 'react';
+
 import { Routes, Route, Link } from 'react-router-dom'; 
 import LandingPage from './components/LandingPage/LandingPage';
 import MainPage from './components/LoggedInPages/MainPage';
@@ -6,7 +8,12 @@ import EditPage from './components/MedicationCRUD/EditPage';
 
 import SignUpPage from './components/SignUp/SignUpPage';
 
+
+
+
 function App() {
+  const [user, setUser] = useState(null); 
+
   return (
     <Routes>
       <Route 
@@ -16,7 +23,10 @@ function App() {
 
       <Route
         path='/signup'
-        element={<SignUpPage/>}
+        element={<SignUpPage
+        user = {user}
+        setUser = {setUser}
+        />}
         />
 
       <Route

@@ -10,8 +10,21 @@ function SignUpFormThree({setPage, patient, setPatient}){
     function handleSubmit(event){
         event.preventDefault();
 
-        fetch('http://localhost:4000/signup');
-    }
+        fetch('http://localhost:4000/signup',{
+            method: "POST",
+            headers: { "Content-Type": "application/json",
+            },
+            body: JSON.stringify(patient),
+            }).then((resp)=>{
+                if(resp.ok){
+                    resp.json().then((currentUser)=> setPatient(currentUser));
+                }else{
+                    resp.json().then((error)=>setErrors(errors.errors));
+                }
+                console.log('currentUser:', patient);
+                console.log('errors:', errors);
+             });
+        }
 
     // track user avatar_url
     function handleChange(event){
