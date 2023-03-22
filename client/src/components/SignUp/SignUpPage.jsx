@@ -5,14 +5,14 @@ import SignUpContent from './SignUpPageContent';
 
 
 
-function SignUpPage({user, setUser}){
+function SignUpPage(){
 
 
 
     return(
         <Layout className='layout'>
           <AppHeader/> 
-          <SignUpContent user={user} setUser ={setUser}/>
+          <SignUpContent/>
         </Layout>
     )
 

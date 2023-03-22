@@ -12,7 +12,10 @@ import SignUpPage from './components/SignUp/SignUpPage';
 
 
 function App() {
-  const [user, setUser] = useState(null); 
+  const [user, setUser] = useState({
+    username: '',
+    password: ''
+  }); 
 
   return (
     <Routes>
@@ -23,15 +26,14 @@ function App() {
 
       <Route
         path='/signup'
-        element={<SignUpPage
-        user = {user}
-        setUser = {setUser}
-        />}
-        />
+        element={<SignUpPage/>}/>
 
       <Route
         path='/login'
-        element={<LogInPage/>}
+        element={<LogInPage
+        user = {user}
+        setUser = {setUser}
+        />}
         />
 
       <Route

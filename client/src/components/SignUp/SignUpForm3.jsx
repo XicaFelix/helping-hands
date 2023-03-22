@@ -19,7 +19,7 @@ function SignUpFormThree({setPage, patient, setPatient}){
                 if(resp.ok){
                     resp.json().then((currentUser)=> setPatient(currentUser));
                 }else{
-                    resp.json().then((error)=>setErrors(errors.errors));
+                    resp.json().then((error)=>setErrors(error.errors));
                 }
                 console.log('currentUser:', patient);
                 console.log('errors:', errors);
