@@ -8,7 +8,12 @@ function LoginForm({user, setUser}){
         setUser({...user, 
             [event.target.name]: event.target.value
             });
-    }
+    };
+
+    // submit post request to log user in
+    function handleSubmit(event){
+        
+    };
 
     return(
         <Form style={{marginTop: '15rem', marginLeft: '10rem', maxWidth: '40rem'}}>
