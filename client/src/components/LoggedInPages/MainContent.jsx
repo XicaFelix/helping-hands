@@ -4,12 +4,14 @@ import TabPane from 'antd/es/tabs/TabPane';
 import Appointment from './Appointment';
 import Medications from './Medications';
 
-function MainContent(){
+function MainContent({user, setUser}){
+
+    const medsList = user.medications.map((medication)=> <Medications key={medication.id} medication={medication}/>)
 
     return(
         <Tabs type='card'>
             <TabPane tab='Medications' key={1}>
-                <Medications/>
+               {medsList}
             </TabPane>
             <TabPane tab='Appointments' key={2}>
                 <Appointment/>

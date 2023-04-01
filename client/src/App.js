@@ -3,6 +3,7 @@ import {  useEffect, useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom'; 
 import LandingPage from './components/LandingPage/LandingPage';
 import MainPage from './components/LoggedInPages/MainPage';
+import Medications from './components/LoggedInPages/Medications';
 import LogInPage from './components/LogIn/LoginPage';
 import EditPage from './components/MedicationCRUD/EditPage';
 
@@ -41,8 +42,11 @@ function App() {
 
       <Route
         path='/home'
-        element={<MainPage/>}
-        />
+        element={<MainPage
+          user = {user}
+          setUser = {setUser}
+          />}
+        /> 
 
       <Route
         path='/edit'

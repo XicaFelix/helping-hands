@@ -5,14 +5,14 @@ import MenuItem from 'antd/es/menu/MenuItem';
 import AppHeader from '../Header';
 import MainContent from './MainContent';
 
-function MainPage(){
+function MainPage({user, setUser}){
 
     return(
         <Layout>
             <AppHeader/>
             <Layout>
                 <Content>
-                    <MainContent/>
+                    <MainContent user={user} setUser={setUser}/>
                 </Content>
                 <Sider collapsible>
                     <Menu theme='light' mode='inline' >
