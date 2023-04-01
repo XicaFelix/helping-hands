@@ -5,13 +5,17 @@ import Appointment from './Appointment';
 import Medications from './Medications';
 
 function MainContent({user, setUser}){
+    let medsList;
+    console.log(user)
 
-    const medsList = user.medications.map((medication)=> <Medications key={medication.id} medication={medication}/>)
+    if(user !== null){
+        medsList = user.medications.map((medication)=> <Medications key={medication.id} medication={medication}/>)
+    }
 
     return(
         <Tabs type='card'>
             <TabPane tab='Medications' key={1}>
-               {medsList}
+               {user !==null ? medsList : <h3> bloop </h3>}
             </TabPane>
             <TabPane tab='Appointments' key={2}>
                 <Appointment/>
