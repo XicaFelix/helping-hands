@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import {  useEffect, useState } from 'react';
 
 import { Routes, Route, Link } from 'react-router-dom'; 
 import LandingPage from './components/LandingPage/LandingPage';
@@ -12,10 +12,13 @@ import SignUpPage from './components/SignUp/SignUpPage';
 
 
 function App() {
+
   const [user, setUser] = useState({
     username: '',
     password: ''
   }); 
+
+  const [currentUser, setCurrentUser] = useState(null);
 
   return (
     <Routes>

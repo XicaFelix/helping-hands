@@ -1,6 +1,13 @@
+import { useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+
 import { Button, Form, Input } from "antd";
 
 function LoginForm({user, setUser}){
+    const navigate = useNavigate();
+
+    const [error, setError] = useState([]);
 
 
     // track username and password
@@ -12,7 +19,25 @@ function LoginForm({user, setUser}){
 
     // submit post request to log user in
     function handleSubmit(event){
-        
+        event.preventDefault();
+        fetch('http://localhost:3000/login',{
+            method : "POST",
+            headers: {
+                "Content-Type" : "application/json",
+
+            },
+            body: JSON.stringify(user),
+        }).then((resp)=>{
+            if(resp.ok){
+                resp.json().then((user)=> setUser(user));
+                console.log(user);
+                navigate('/home');
+            }else{
+                resp.json().then((error)=> setError(error.errors));
+                console.log('post failure')
+                console.log(error);
+            }
+        });
     };
 
     return(
@@ -24,7 +49,7 @@ function LoginForm({user, setUser}){
                 <Input placeholder='Password' name="password" value={user.password} type={'password'} onChange={handleChange}/>
             </Form.Item>
             <Form.Item>
-                <Button style={{marginLeft: '20rem', minWidth: '6rem', minHeight:'3rem'}}>Login</Button>
+                <Button style={{marginLeft: '20rem', minWidth: '6rem', minHeight:'3rem'}} onClick={handleSubmit}>Login</Button>
             </Form.Item>
         </Form>
     );

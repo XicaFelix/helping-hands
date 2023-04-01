@@ -6,6 +6,6 @@ class Patient < ApplicationRecord
     has_secure_password
 
     has_many :appointments
-    has_many :medicationtrackers
-    has_many :medications, through: :medicationtrackers
+    has_many :medication_trackers
+    has_many :medications, through: :medication_trackers
 end

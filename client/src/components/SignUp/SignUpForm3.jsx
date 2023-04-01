@@ -10,10 +10,10 @@ function SignUpFormThree({setPage, patient, setPatient}){
     function handleSubmit(event){
         event.preventDefault();
 
-        fetch('http://localhost:4000/signup',{
+        fetch('http://localhost:3000/signup',{
             method: "POST",
             headers: { "Content-Type": "application/json",
-            },
+            },                                                                                                                                                                                                                                                       
             body: JSON.stringify(patient),
             }).then((resp)=>{
                 if(resp.ok){

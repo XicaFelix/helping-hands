@@ -25,7 +25,7 @@ MedicationTracker.destroy_all
     Patient.create(
         person_name: Faker::Name.name,
         username: Faker::Internet.username,
-        password_digest: "",
+        password: "1234",
         age: rand(1..102),
         avatar_url: Faker::Avatar.image(size: '100x100')
     )
