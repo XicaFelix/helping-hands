@@ -19,7 +19,16 @@ function App() {
     password: ''
   }); 
 
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
+
+  const [meds, setMeds] = useState({
+    dosage: '',
+    id: 0,
+    name: '',
+    unit: '',
+    times_per_day: 0,
+    times_per_week: 0
+  });
 
   return (
     <Routes>
@@ -37,6 +46,8 @@ function App() {
         element={<LogInPage
         user = {user}
         setUser = {setUser}
+        currentUser= {currentUser}
+        setCurrentUser={setCurrentUser}
         />}
         />
 
@@ -45,12 +56,21 @@ function App() {
         element={<MainPage
           user = {user}
           setUser = {setUser}
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+          meds = {meds}
+          setMeds = {setMeds}
           />}
         /> 
 
       <Route
         path='/edit'
-        element={<EditPage/>}
+        element={<EditPage
+          user={user}
+          setUser = {setUser}
+          meds = {meds}
+          setMeds = {setMeds}
+          />}
         />  
     </Routes>
   );

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Button, Form, Input } from "antd";
 
-function LoginForm({user, setUser}){
+function LoginForm({user, setUser, currentUser, setCurrentUser}){
     const navigate = useNavigate();
 
     const [error, setError] = useState([]);
@@ -29,8 +29,11 @@ function LoginForm({user, setUser}){
             body: JSON.stringify(user),
         }).then((resp)=>{
             if(resp.ok){
-                resp.json().then((user)=> setUser(user));
-                console.log(user);
+                resp.json().then((user)=> {
+                    setCurrentUser(user)
+                    console.log(currentUser);
+                });
+                
                 navigate('/home');
             }else{
                 resp.json().then((error)=> setError(error.errors));

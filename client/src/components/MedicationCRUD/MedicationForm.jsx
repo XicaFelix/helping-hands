@@ -1,30 +1,55 @@
 import { Form, Input, Button, Select, Space } from 'antd';
-import { Option } from 'antd/es/mentions';
 
-function MedicationForm(){
+
+function MedicationForm({user, setUser, meds, setMeds}){
+    function handleChange(event){
+        setMeds({...meds,
+            [event.target.name] : event.target.value
+        });
+
+        console.log(meds);
+    };
+
+    function handleUpdate(event){
+        event.preventDefault();
+        fetch(`http://localhost:4000/medications/${meds.id}`,{
+            method : "PATCH",
+            headers : {"Content-Type": "application/json",},
+            body : JSON.stringify(meds),
+        }).then((r)=>{
+            if(r.ok){
+                
+            }
+        })
+    }
+
 
     return(
         <Space direction='vertical' size={'large'} style={{margin: '2rem', display: 'block'}}>
         <Form>
             <Form.Item label='Medication Name' >
-                <Input placeholder='Medication Name'/>
+                <Input placeholder='Medication Name' value={meds.name} name='name' onChange={handleChange}/>
             </Form.Item>
-            <Form.Item label='Dosage'>
-            <Select>
-                <Option value='mg'>MG</Option>
-                <Option value='ml'>ML</Option>
-                <Option value= 'puff'>Puff</Option>
+            <Form.Item label='Dosage:'>
+                <Input placeholder='Dosage' value={meds.dosage} name='dosage' onChange={handleChange}/>
+            </Form.Item>
+            <Form.Item label='Unit'>
+            <Select value={meds.unit}  onChange={(e)=> setMeds({...meds,'unit': e})}>
+                <Select.Option value='mg'>MG</Select.Option>
+                <Select.Option value='ml'>ML</Select.Option>
+                <Select.Option value= 'puff'>Puff</Select.Option>
             </Select>
             </Form.Item>
             <Form.Item label='Times per Day'>
-                <Input placeholder='Times per Day' />
+                <Input placeholder='Times per Day' value={meds.times_per_day} name='times_per_day' onChange={handleChange}/>
             </Form.Item>
             <Form.Item label='Times per Week'>
-                <Input placeholder='Times per Week' />
+                <Input placeholder='Times per Week' value={meds.times_per_week} name='times_per_week' onChange={handleChange}/>
             </Form.Item>
             <Space align='center' style={{margin: 'auto', width:'50%'}}>
                 <Button>Add</Button>
                 <Button>Delete</Button>
+                <Button>Update</Button>
             </Space>
         </Form>
         </Space>

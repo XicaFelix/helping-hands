@@ -6,14 +6,14 @@ import AppHeader from '../Header';
 import MedicationForm from './MedicationForm';
 
 
-function EditPage(){
+function EditPage({user, setUser, meds, setMeds}){
 
     return(
         <Layout>
             <AppHeader/>
             <Layout>
                 <Content>
-                    <MedicationForm/>
+                    <MedicationForm user={user} setUser = {setUser} meds={meds} setMeds={setMeds}/>
                 </Content>
                 <Sider collapsible>
                     <Menu theme='light' mode='inline' >

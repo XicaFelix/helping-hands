@@ -4,23 +4,23 @@ import TabPane from 'antd/es/tabs/TabPane';
 import Appointment from './Appointment';
 import Medications from './Medications';
 
-function MainContent({user, setUser}){
+function MainContent({user, setUser, currentUser, setCurrentUser, meds, setMeds}){
     let medsList;
     let apptList;
-    console.log(user)
+    console.log(currentUser);
 
-    if(user !== null){
-        medsList = user.medications.map((medication)=> <Medications key={medication.id} medication={medication}/>)
-        apptList = user.appointments.map((appointment)=> <Appointment key={appointment.id} appointment={appointment}/>)
+    if(currentUser !== null || currentUser !== undefined){
+        medsList = currentUser.medications.map((medication)=> <Medications key={medication.id} medication={medication} meds={meds} setMeds={setMeds}/>)
+        apptList = currentUser.appointments.map((appointment)=> <Appointment key={appointment.id} appointment={appointment}/>)
     }
 
     return(
         <Tabs type='card'>
             <TabPane tab='Medications' key={1}>
-               {user !==null ? medsList : <h3> System error</h3>}
+               {currentUser !==null ? medsList : <h3> System error</h3>}
             </TabPane>
             <TabPane tab='Appointments' key={2}>
-                {apptList}
+                {currentUser !==null ? apptList : <h3> System error</h3>}
             </TabPane>
         </Tabs>
     );

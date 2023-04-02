@@ -5,7 +5,7 @@ import image from '/Users/Xicafelix/Development/code/Phase-4/helping-hands/clien
 
 const {Header, Content, Footer} = Layout;
 
-function LogInPage({user, setUser}){
+function LogInPage({user, setUser, currentUser, setCurrentUser}){
 
     return(
         <Layout>
@@ -17,7 +17,7 @@ function LogInPage({user, setUser}){
                             <Image src={image} alt="login-page" preview={false}/>
                     </Col>
                     <Col span={11}>
-                            <LoginForm user={user} setUser={setUser}/>
+                            <LoginForm user={user} setUser={setUser} currentUser={currentUser} setCurrentUser={setCurrentUser}/>
                     </Col>
                 </Row>
             </Content>
