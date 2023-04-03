@@ -66,8 +66,8 @@ function App() {
       <Route
         path='/edit'
         element={<EditPage
-          user={user}
-          setUser = {setUser}
+          currentUser={currentUser}
+          setCurrentUser = {setCurrentUser}
           meds = {meds}
           setMeds = {setMeds}
           />}

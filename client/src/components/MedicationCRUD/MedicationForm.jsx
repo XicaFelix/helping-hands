@@ -1,7 +1,14 @@
+import {  useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { Form, Input, Button, Select, Space } from 'antd';
 
 
-function MedicationForm({user, setUser, meds, setMeds}){
+function MedicationForm({currentUser, setCurrentUser, meds, setMeds}){
+    const navigate = useNavigate();
+
+    const [errors, setErrors] = useState([]);
+
     function handleChange(event){
         setMeds({...meds,
             [event.target.name] : event.target.value
@@ -16,11 +23,22 @@ function MedicationForm({user, setUser, meds, setMeds}){
             method : "PATCH",
             headers : {"Content-Type": "application/json",},
             body : JSON.stringify(meds),
-        }).then((r)=>{
-            if(r.ok){
-                
+        }).then((resp)=>{
+            if(resp.ok){
+                resp.json().then((resp)=> {
+                    setCurrentUser({...currentUser, resp});
+                    console.log('resp', resp);
+                    navigate('/home');
+                })
+            }else{
+                resp.json().then((resp)=> {
+                    setErrors(resp.errors);
+                    console.log('patch failure:', errors);
+                })
             }
-        })
+        });
+        setCurrentUser({...currentUser, meds});
+        console.log(currentUser);
     }
 
 
@@ -49,7 +67,7 @@ function MedicationForm({user, setUser, meds, setMeds}){
             <Space align='center' style={{margin: 'auto', width:'50%'}}>
                 <Button>Add</Button>
                 <Button>Delete</Button>
-                <Button>Update</Button>
+                <Button onClick={handleUpdate}>Update</Button>
             </Space>
         </Form>
         </Space>
