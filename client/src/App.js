@@ -19,8 +19,6 @@ function App() {
     password: ''
   }); 
 
-  const [currentUser, setCurrentUser] = useState({});
-
   const [meds, setMeds] = useState({
     dosage: '',
     id: 0,
@@ -29,6 +27,11 @@ function App() {
     times_per_day: 0,
     times_per_week: 0
   });
+
+
+
+  const [currentUser, setCurrentUser] = useState({medications : [meds]});
+
 
   return (
     <Routes>

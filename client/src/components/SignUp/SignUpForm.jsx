@@ -12,32 +12,35 @@ function SignUpForm({setPage, patient, setPatient}){
 
     // log changes to user info
     function handleChange(event){
+
+        setPatient({...patient,
+            [event.target.name] : event.target.value
+        });
+        console.log(patient);
+    }
+
+    function handleNameChange(event){
         setName({...name, 
             [event.target.name] : event.target.value
         });
-
-        setPatient({...patient,
-            [event.target.name] : event.target.value
-        });
-
     }
-
 
     function handleClick(){
         let fullName = name.firstName + " " + name.lastName;
+        console.log(patient);
         setPage(2);
         setPatient({...patient,
-            name : fullName
+            person_name : fullName
         });
     }
 
     return(
         <Form layout="inline" style={{margin:'11rem'}}>
             <Form.Item label='First Name' style={{paddingBottom: '1rem'}}>
-                <Input placeholder="First Name" name="firstName" value={name.firstName} onChange={handleChange}/>
+                <Input placeholder="First Name" name="firstName" value={name.firstName} onChange={handleNameChange}/>
             </Form.Item>
             <Form.Item label='Last Name'>
-                <Input placeholder="Last Name" name="lastName" value={name.lastName} onChange={handleChange}/>
+                <Input placeholder="Last Name" name="lastName" value={name.lastName} onChange={handleNameChange}/>
             </Form.Item>
             <Form.Item label='Age' style={{marginLeft: '8rem'}}>
                 <Input placeholder="Age" name="age" value={patient.age} onChange={handleChange}/>

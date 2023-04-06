@@ -42,7 +42,7 @@ function SignUpFormThree({setPage, patient, setPatient}){
                 <Button type='primary' onClick={()=> setPage(2)}>Prev</Button>
             </Form.Item>
             <Form.Item>
-                <Button type='primary'>Submit</Button>
+                <Button type='primary' onClick={handleSubmit}>Submit</Button>
             </Form.Item>
         </Form>
     );

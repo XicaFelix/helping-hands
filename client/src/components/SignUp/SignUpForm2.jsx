@@ -9,6 +9,7 @@ function SignUpFormTwo({setPage, patient, setPatient}){
         setPatient({...patient,
             [event.target.name] : event.target.value
         });
+        console.log(patient);
     }
 
 
