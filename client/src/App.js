@@ -13,7 +13,6 @@ import SignUpPage from './components/SignUp/SignUpPage';
 
 
 function App() {
-
   const [user, setUser] = useState({
     username: '',
     password: ''
@@ -31,6 +30,14 @@ function App() {
 
 
   const [currentUser, setCurrentUser] = useState({medications : [meds]});
+
+   // auto-login the current user
+   useEffect(()=>{
+    fetch('http://localhost:3000/me')
+    .then((resp)=>{
+      if(resp.ok) resp.json().then(resp=> setCurrentUser(resp));
+    })
+  },[])
 
 
   return (
