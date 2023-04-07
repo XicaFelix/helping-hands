@@ -14,6 +14,12 @@ class MedicationsController < ApplicationController
         medication.update!(medication_params)
         render json: medication
     end
+    
+    def delete
+        medication = Medication.find(params[:id])
+        medication.destroy
+        head :no_content
+    end
 
     private
 
