@@ -1,5 +1,5 @@
 import {  useState } from 'react';
-import { json, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Form, Input, Button, Select, Space } from 'antd';
 
@@ -7,6 +7,7 @@ import { Form, Input, Button, Select, Space } from 'antd';
 function MedicationForm({currentUser, setCurrentUser, meds, setMeds}){
     const navigate = useNavigate();
 
+    //  keep track of any response errors
     const [errors, setErrors] = useState([]);
 
     //  keep track of changes to the medication form
@@ -18,12 +19,27 @@ function MedicationForm({currentUser, setCurrentUser, meds, setMeds}){
         console.log(meds);
     };
 
+    function handleDelete(event){
+        event.preventDefault();
+        fetch(`http://localhost:4000/medications/${meds.id}`,{
+            method : "DELETE"
+        }).then((resp)=>{
+            if(resp.ok){
+                resp.json().then((resp)=> console.log(resp));
+            }else{
+                resp.json().then((resp)=>{
+                    setErrors(resp.errors);
+                    console.log(errors);
+                });
+            };
+        });
+    };
 
 // Send post request to database, add newly created medication to current user object
     function handleCreate(event){
         event.preventDefault();
         fetch('http://localhost:4000/medications', {
-            method : 'POST',
+            method : "POST",
             headers : {"Content-Type" : "application/json",},
             body : JSON.stringify(meds),
         }).then((resp)=>{
@@ -37,8 +53,8 @@ function MedicationForm({currentUser, setCurrentUser, meds, setMeds}){
                 resp.json().then((resp)=>{
                     setErrors(resp.errors);
                     console.log('post failure');
-                })
-            }
+                });
+            };
         })
     };
 
@@ -92,7 +108,7 @@ function MedicationForm({currentUser, setCurrentUser, meds, setMeds}){
             </Form.Item>
             <Space align='center' style={{margin: 'auto', width:'50%'}}>
                 <Button onClick={handleCreate}>Add</Button>
-                <Button>Delete</Button>
+                <Button onClick={handleDelete}>Delete</Button>
                 <Button onClick={handleUpdate}>Update</Button>
             </Space>
         </Form>
