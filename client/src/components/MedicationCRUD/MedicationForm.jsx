@@ -1,5 +1,5 @@
 import {  useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 
 import { Form, Input, Button, Select, Space } from 'antd';
 
@@ -9,6 +9,7 @@ function MedicationForm({currentUser, setCurrentUser, meds, setMeds}){
 
     const [errors, setErrors] = useState([]);
 
+    //  keep track of changes to the medication form
     function handleChange(event){
         setMeds({...meds,
             [event.target.name] : event.target.value
@@ -17,6 +18,31 @@ function MedicationForm({currentUser, setCurrentUser, meds, setMeds}){
         console.log(meds);
     };
 
+
+// Send post request to database, add newly created medication to current user object
+    function handleCreate(event){
+        event.preventDefault();
+        fetch('http://localhost:4000/medications', {
+            method : 'POST',
+            headers : {"Content-Type" : "application/json",},
+            body : JSON.stringify(meds),
+        }).then((resp)=>{
+            if(resp.ok){
+                resp.json().then(((resp)=>{
+                    setCurrentUser({...currentUser, resp});
+                    console.log('new med', resp);
+                    //  navigate('/home');
+                }))
+            }else{
+                resp.json().then((resp)=>{
+                    setErrors(resp.errors);
+                    console.log('post failure');
+                })
+            }
+        })
+    };
+
+    //  Send update request to database, update current user w/ altered medication
     function handleUpdate(event){
         event.preventDefault();
         fetch(`http://localhost:4000/medications/${meds.id}`,{
@@ -65,7 +91,7 @@ function MedicationForm({currentUser, setCurrentUser, meds, setMeds}){
                 <Input placeholder='Times per Week' value={meds.times_per_week} name='times_per_week' onChange={handleChange}/>
             </Form.Item>
             <Space align='center' style={{margin: 'auto', width:'50%'}}>
-                <Button>Add</Button>
+                <Button onClick={handleCreate}>Add</Button>
                 <Button>Delete</Button>
                 <Button onClick={handleUpdate}>Update</Button>
             </Space>
