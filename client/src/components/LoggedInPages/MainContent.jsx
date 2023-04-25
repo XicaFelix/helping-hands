@@ -1,5 +1,4 @@
 import {Tabs} from 'antd'
-import Item from 'antd/es/list/Item';
 import TabPane from 'antd/es/tabs/TabPane';
 import Appointment from './Appointment';
 import Medications from './Medications';
