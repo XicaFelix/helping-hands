@@ -38,9 +38,9 @@ function MainPage({currentUser, setCurrentUser, user, setUser, meds, setMeds}){
                 </Content>
                 <Sider collapsible>
                     <Menu theme='light' mode='inline' onClick={handleSelect}>
-                        <MenuItem key={1} > Home</MenuItem>
-                        <MenuItem key={2}>(+) Medication</MenuItem>
-                        <MenuItem key={3}> (+) Appointment</MenuItem>
+                        <MenuItem key={1} onClick={()=> navigate('/home')}> Home</MenuItem>
+                        <MenuItem key={2} onClick={()=> navigate('/edit')}>(+) Medication</MenuItem>
+                        <MenuItem key={3} onClick={()=> navigate('/appointment/new')}> (+) Appointment</MenuItem>
                         <MenuItem key={4}>Profile</MenuItem>
                         <MenuItem key={5}>Logout</MenuItem>
                     </Menu>

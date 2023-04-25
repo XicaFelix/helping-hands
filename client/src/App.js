@@ -1,4 +1,4 @@
-import {  useEffect, useState } from 'react';
+import {  useEffect, useState} from 'react';
 
 import { Routes, Route, Link } from 'react-router-dom'; 
 import LandingPage from './components/LandingPage/LandingPage';
@@ -8,6 +8,7 @@ import LogInPage from './components/LogIn/LoginPage';
 import EditPage from './components/MedicationCRUD/EditPage';
 
 import SignUpPage from './components/SignUp/SignUpPage';
+import AppointmentForm from './components/LoggedInPages/AppointmentForm';
 
 
 
@@ -81,7 +82,15 @@ function App() {
           meds = {meds}
           setMeds = {setMeds}
           />}
-        />  
+        /> 
+
+        <Route
+          path='/appointment/new'
+          element = {<AppointmentForm
+            currentUser = {currentUser}
+            setCurrentUser = {setCurrentUser}
+          />}
+        /> 
     </Routes>
   );
 }
