@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { Layout, Col, Row, Image,  Button, Form, Input } from "antd";
 import AppHeader from "../Header";
 
 import image from '/Users/Xicafelix/Development/code/Phase-4/helping-hands/client/src/Assets/pexels-pixabay-45842.jpg';
+import { UserContext } from "../../Contexts/UserContext";
 
 const {Header, Content, Footer} = Layout;
 
 
-function LogInPage({user, setUser, currentUser, setCurrentUser}){
+function LogInPage(){
 
+    const {user, setUser, currentUser, setCurrentUser, setLoggedIn} = useContext(UserContext);
     const navigate = useNavigate();
 
     const [error, setError] = useState([]);
@@ -39,7 +41,7 @@ function LogInPage({user, setUser, currentUser, setCurrentUser}){
                     setCurrentUser(user)
                     console.log(currentUser);
                 });
-                
+                setLoggedIn(true);
                 navigate('/home');
             }else{
                 resp.json().then((error)=> setError(error.errors));

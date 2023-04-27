@@ -9,89 +9,73 @@ import EditPage from './components/MedicationCRUD/EditPage';
 
 import SignUpPage from './components/SignUp/SignUpPage';
 import AppointmentForm from './components/LoggedInPages/AppointmentForm';
+import { UserProvider } from './Contexts/UserContext';
 
 
 
 
 function App() {
-  const [user, setUser] = useState({
-    username: '',
-    password: ''
-  }); 
+  // const [user, setUser] = useState({
+  //   username: '',
+  //   password: ''
+  // }); 
 
-  const [meds, setMeds] = useState({
-    dosage: '',
-    id: 0,
-    name: '',
-    unit: '',
-    times_per_day: 0,
-    times_per_week: 0
-  });
+  // const [meds, setMeds] = useState({
+  //   dosage: '',
+  //   id: 0,
+  //   name: '',
+  //   unit: '',
+  //   times_per_day: 0,
+  //   times_per_week: 0
+  // });
 
 
 
-  const [currentUser, setCurrentUser] = useState({medications : [meds]});
+  // const [currentUser, setCurrentUser] = useState({medications : [meds]});
 
-   // auto-login the current user
-   useEffect(()=>{
-    fetch('http://localhost:3000/me')
-    .then((resp)=>{
-      if(resp.ok) resp.json().then(resp=> setCurrentUser(resp));
-    })
-  },[])
+  //  // auto-login the current user
+  //  useEffect(()=>{
+  //   fetch('http://localhost:3000/me')
+  //   .then((resp)=>{
+  //     if(resp.ok) resp.json().then(resp=> setCurrentUser(resp));
+  //   })
+  // },[])
 
 
   return (
-    <Routes>
-      <Route 
-        path='/'
-        element= {<LandingPage/>}
-      />
-
-      <Route
-        path='/signup'
-        element={<SignUpPage/>}/>
-
-      <Route
-        path='/login'
-        element={<LogInPage
-        user = {user}
-        setUser = {setUser}
-        currentUser= {currentUser}
-        setCurrentUser={setCurrentUser}
-        />}
+    <UserProvider>
+      <Routes>
+        <Route 
+          path='/'
+          element= {<LandingPage/>}
         />
 
-      <Route
-        path='/home'
-        element={<MainPage
-          user = {user}
-          setUser = {setUser}
-          currentUser={currentUser}
-          setCurrentUser={setCurrentUser}
-          meds = {meds}
-          setMeds = {setMeds}
-          />}
-        /> 
-
-      <Route
-        path='/edit'
-        element={<EditPage
-          currentUser={currentUser}
-          setCurrentUser = {setCurrentUser}
-          meds = {meds}
-          setMeds = {setMeds}
-          />}
-        /> 
+        <Route
+          path='/signup'
+          element={<SignUpPage/>}/>
 
         <Route
-          path='/appointment/new'
-          element = {<AppointmentForm
-            currentUser = {currentUser}
-            setCurrentUser = {setCurrentUser}
-          />}
-        /> 
-    </Routes>
+          path='/login'
+          element={<LogInPage/>}
+          />
+
+        <Route
+          path='/home'
+          element={<MainPage/>}
+          /> 
+
+        <Route
+          path='/edit'
+          element={<EditPage/>}
+          /> 
+
+          <Route
+            path='/appointment/new'
+            element = {<AppointmentForm/>}
+          /> 
+      </Routes>
+    </UserProvider>
+    
   );
 }
 

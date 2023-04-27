@@ -9,19 +9,23 @@ import MenuItem from 'antd/es/menu/MenuItem';
 import AppHeader from '../Header';
 import Appointment from './Appointment';
 import Medications from './Medications';
+import { useContext } from 'react';
+import { UserContext } from '../../Contexts/UserContext';
 
 
 
-function MainPage({currentUser, setCurrentUser, user, setUser, meds, setMeds}){
+function MainPage(){
     const navigate = useNavigate();
+
+    const {currentUser, setCurrentUser, user, setUser, meds, setMeds, setLoggedIn} = useContext(UserContext);
 
     let medsList;
     let apptList;
     console.log(currentUser);
 
     if(currentUser !== null || currentUser !== {}){
-        medsList = currentUser?.medications.map((medication)=> <Medications key={medication.id} medication={medication} meds={meds} setMeds={setMeds}/>)
-        apptList = currentUser?.appointments.map((appointment)=> <Appointment key={appointment.id} appointment={appointment}/>)
+        medsList = currentUser.medications?.map((medication)=> <Medications key={medication.id} medication={medication} meds={meds} setMeds={setMeds}/>)
+        apptList = currentUser.appointments?.map((appointment)=> <Appointment key={appointment.id} appointment={appointment}/>)
     }
 
 
@@ -39,6 +43,7 @@ function MainPage({currentUser, setCurrentUser, user, setUser, meds, setMeds}){
                         password: ''
                     })
                     console.log(resp);
+                    setLoggedIn(false);
                     navigate('/');
                 }
             })
@@ -50,6 +55,7 @@ function MainPage({currentUser, setCurrentUser, user, setUser, meds, setMeds}){
             <AppHeader/>
             <Layout>
                 <Content>
+                    <h3>Welcome {`${currentUser.person_name}!`}</h3>
                     <Tabs type='card'>
                         <TabPane tab='Medications' key={1}>
                         {currentUser !==null ? medsList : <h3> System error</h3>}

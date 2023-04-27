@@ -51,8 +51,10 @@ function MedicationForm({currentUser, setCurrentUser, meds, setMeds}){
                 }))
             }else{
                 resp.json().then((resp)=>{
-                    setErrors(resp.errors);
+                    console.log(resp);
+                    setErrors([resp.error]);
                     console.log('post failure');
+                    console.log(errors);
                 });
             };
         })
@@ -68,8 +70,9 @@ function MedicationForm({currentUser, setCurrentUser, meds, setMeds}){
         }).then((resp)=>{
             if(resp.ok){
                 resp.json().then((resp)=> {
-                    setCurrentUser({...currentUser, resp});
-                    console.log('resp', resp);
+                    setMeds(resp);
+                    setCurrentUser({...currentUser, meds});
+                    console.log('current user', currentUser);
                     navigate('/home');
                 })
             }else{

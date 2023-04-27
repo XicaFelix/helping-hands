@@ -9,8 +9,9 @@ function MainContent({user, setUser, currentUser, setCurrentUser, meds, setMeds}
     console.log(currentUser);
 
     if(currentUser !== null || currentUser !== {}){
-        medsList = currentUser?.medications.map((medication)=> <Medications key={medication.id} medication={medication} meds={meds} setMeds={setMeds}/>)
-        apptList = currentUser?.appointments.map((appointment)=> <Appointment key={appointment.id} appointment={appointment}/>)
+        console.log(currentUser);
+        medsList = currentUser.medications?.map((medication)=> <Medications key={medication.id} medication={medication} meds={meds} setMeds={setMeds}/>)
+        apptList = currentUser.appointments?.map((appointment)=> <Appointment key={appointment.id} appointment={appointment}/>)
     }
 
     return(
