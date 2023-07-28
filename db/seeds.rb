@@ -38,11 +38,7 @@ end
 # Creating Pill based medications
 medications_pill.each do |name|
     Medication.create(
-        name: name,
-        dosage: dosage.sample(),
-        unit: 'mg',
-        times_per_day: Faker::Number.between(from: 1, to: 3),
-        times_per_week: Faker::Number.between(from: 1, to: 7),
+        name: name
     )
 
 end
@@ -50,36 +46,54 @@ end
 # Creating injection based medications
 medications_injections.each do |name|
     Medication.create(
-        name: name,
-        dosage: dosage.sample(),
-        unit: 'ml',
-        times_per_day: Faker::Number.between(from: 1, to: 3),
-        times_per_week: Faker::Number.between(from: 1, to: 7),
+        name: name
     )
 end
 
 # Creating inhaler based medications
 medication_inhaler.each do |name|
     Medication.create(
-        name: name,
-        dosage: rand(1..3),
-        unit: 'puff',
-        times_per_day: Faker::Number.between(from: 1, to: 3),
-        times_per_week: Faker::Number.between(from: 1, to: 7),
+        name: name
     )
 end
 
 
 # Setting up the join table
-20.times do 
+5.times do 
     MedicationTracker.create(
         patient_id: Patient.all.sample.id,
-        medication_id: Medication.all.sample.id
+        medication_id: Medication.all.sample.id,
+        dosage: dosage.sample(),
+        unit: 'mg',
+        times_per_day: Faker::Number.between(from: 1, to: 3),
+        times_per_week: Faker::Number.between(from: 1, to: 7)
     )
 end
 
+5.times do
+    MedicationTracker.create(
+        patient_id: Patient.all.sample.id,
+        medication_id: Medication.all.sample.id,
+        dosage: dosage.sample(),
+        unit: 'puff',
+        times_per_day: Faker::Number.between(from: 1, to: 3),
+        times_per_week: Faker::Number.between(from: 1, to: 7)
+    ) 
+end
+
+5.times do
+    MedicationTracker.create(
+        patient_id: Patient.all.sample.id,
+        medication_id: Medication.all.sample.id,
+        dosage: dosage.sample(),
+        unit: 'ml',
+        times_per_day: Faker::Number.between(from: 1, to: 3),
+        times_per_week: Faker::Number.between(from: 1, to: 7)
+    ) 
+end
+
 # Creating Appointments
-20.times do 
+22.times do 
     Appointment.create(
         provider_name: "#{Faker::Name.first_name} #{Faker::Name.last_name}, #{suffix.sample}",
         date: Faker::Date.forward(days: 365),

@@ -4,5 +4,5 @@ class PatientSerializer < ActiveModel::Serializer
   has_many :appointments
 
   has_many :medication_trackers
-  has_many :medications, through: :medication_trackers
+  has_many :medications
 end

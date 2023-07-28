@@ -21,6 +21,12 @@ class MedicationsController < ApplicationController
         head :no_content
     end
 
+    def create
+        medication = Medication.create!(medication_params)
+        medication.medication_trackers.create!(patient_id: @current_patient.id)
+        render json: medication, status: :created
+    end
+
     private
 
     def find_medication
@@ -28,6 +34,6 @@ class MedicationsController < ApplicationController
     end
 
     def medication_params
-        params.permit(:name, :unit, :dosage, :times_per_day, :times_per_week)
+        params.require(:medication).permit(:name)
     end
 end

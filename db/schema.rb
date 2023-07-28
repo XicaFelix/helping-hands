@@ -36,6 +36,10 @@ ActiveRecord::Schema.define(version: 2023_03_16_213607) do
   end
 
   create_table "medication_trackers", force: :cascade do |t|
+    t.string "dosage"
+    t.string "unit"
+    t.integer "times_per_day"
+    t.integer "times_per_week"
     t.integer "patient_id"
     t.integer "medication_id"
     t.datetime "created_at", precision: 6, null: false
@@ -44,10 +48,6 @@ ActiveRecord::Schema.define(version: 2023_03_16_213607) do
 
   create_table "medications", force: :cascade do |t|
     t.string "name"
-    t.string "dosage"
-    t.string "unit"
-    t.integer "times_per_day"
-    t.integer "times_per_week"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
