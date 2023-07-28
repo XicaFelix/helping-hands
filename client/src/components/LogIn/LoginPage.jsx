@@ -46,7 +46,7 @@ function LogInPage(){
                 setLoggedIn(true);
                 navigate('/home');
             }else{
-                resp.json().then((error)=> setError(error.errors));
+                resp.json().then((error)=> setError(error.error));
                 console.log('post failure')
                 console.log(error);
             }
@@ -57,7 +57,7 @@ function LogInPage(){
         <Layout>
             <AppHeader/>
             <Content>
-                <h1>Be the #1 Caregiver</h1>
+                {error ? <h1>`${error}`</h1> :<h1>Be the #1 Caregiver</h1>}
                 <Row>
                     <Col span={11} style={{marginLeft:'2rem', marginRight: '2rem'}}>
                             <Image src={image} alt="login-page" preview={false}/>

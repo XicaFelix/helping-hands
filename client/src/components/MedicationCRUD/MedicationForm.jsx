@@ -125,6 +125,7 @@ function MedicationForm(){
 
     return(
         <Space direction='vertical' size={'large'} style={{margin: '2rem', display: 'block'}}>
+            {error ? <h2>`${error}`</h2>: <></>}
         <Form>
             <Form.Item label='Medication Name' >
                 <Select value={selectedMed.name} name='name' onChange={(e)=> setSelectedMed({...selectedMed, 'name': e})}>
