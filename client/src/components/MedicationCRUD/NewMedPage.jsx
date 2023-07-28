@@ -9,14 +9,15 @@ import MenuItem from 'antd/es/menu/MenuItem';
 import AppHeader from '../Header';
 import MedicationForm from './MedicationForm';
 import { UserContext } from '../../Contexts/UserProvider';
+import AddMedForm from './AddMedForm';
 
 
-function EditPage(){
+function NewMedPage(){
     const navigate = useNavigate();
 
 
 
-    const {currentUser, setCurrentUser, setLoggedIn, selectedMed, setSelectedMed} = useContext(UserContext);
+    const {currentUser, setCurrentUser, setLoggedIn, selectedMed, setSelectedMed, allMeds} = useContext(UserContext);
     // console.log(currentUser, selectedMed);
 
     function handleSelect(event){
@@ -42,7 +43,7 @@ function EditPage(){
             <AppHeader/>
             <Layout>
                 <Content>
-                    <MedicationForm/>
+                    <AddMedForm currentUser={currentUser} setCurrentUser={setCurrentUser} selectedMed={selectedMed} setSelectedMed={setSelectedMed} allMeds={allMeds}/>
                 </Content>
                 <Sider collapsible>
                 <Menu theme='light' mode='inline' onClick={handleSelect}>
@@ -58,4 +59,4 @@ function EditPage(){
     );
 }
 
-export default EditPage;
+export default NewMedPage;

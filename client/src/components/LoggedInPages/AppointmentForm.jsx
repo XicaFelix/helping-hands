@@ -1,12 +1,12 @@
 import {  useState, useContext } from 'react';
-import { UserContext } from '../../Contexts/UserContext';
+import { UserContext } from '../../Contexts/UserProvider';
 import { useNavigate } from 'react-router-dom';
 
 import { Form, Input, Button, Space, TimePicker, DatePicker } from 'antd';
 
 function AppointmentForm(){
 
-    const {currentUser, setCurrentUser} = useContext(UserContext);
+
 
     // keep track of changes to appointments
     const [appt, setAppt] = useState({

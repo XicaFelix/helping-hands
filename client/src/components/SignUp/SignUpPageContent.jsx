@@ -4,14 +4,14 @@ import { Content } from 'antd/es/layout/layout';
 import SignUpForm from './SignUpForm';
 import SignUpFormTwo from './SignUpForm2';
 import SignUpFormThree from './SignUpForm3';
-import backgroundImage from '/Users/Xicafelix/Development/code/Phase-4/helping-hands/client/src/Assets/pexels-kampus-production-7551671.jpg'
+import backgroundImage from '../pexels-kampus-production-7551671.jpg';
 
 function SignUpContent(){
     //  set up state to track the current page of sign up form 
     const [page, setPage] = useState(1);
 
     // set up state to track user signup details
-    const [patient, setPatient] = useState({
+    const [signupDet, setSignupDet] = useState({
         name : '',
         username : '',
         password : '',
@@ -22,11 +22,11 @@ function SignUpContent(){
     // determine which sign up form to render
     let form;
     if(page === 1){
-        form = <SignUpForm setPage={setPage} patient={patient} setPatient={setPatient}/>
+        form = <SignUpForm setPage={setPage} signupDet={signupDet} setSignupDet={setSignupDet}/>
     }else if(page === 2){
-        form = <SignUpFormTwo setPage={setPage} patient={patient} setPatient={setPatient}/>
+        form = <SignUpFormTwo setPage={setPage} signupDet={signupDet} setSignupDet={setSignupDet}/>
     }else{
-        form = <SignUpFormThree setPage={setPage} patient={patient} setPatient={setPatient}/>
+        form = <SignUpFormThree setPage={setPage} signupDet={signupDet} setSignupDet={setSignupDet}/>
     };
 
     return(

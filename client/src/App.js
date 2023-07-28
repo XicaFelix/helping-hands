@@ -9,38 +9,16 @@ import EditPage from './components/MedicationCRUD/EditPage';
 
 import SignUpPage from './components/SignUp/SignUpPage';
 import AppointmentForm from './components/LoggedInPages/AppointmentForm';
-import { UserProvider } from './Contexts/UserContext';
+import { UserProvider } from './Contexts/UserProvider.jsx';
+import AppHeader from './components/Header';
+import MedicationForm from './components/MedicationCRUD/MedicationForm';
+import AddMedForm from './components/MedicationCRUD/AddMedForm';
+import NewMedPage from './components/MedicationCRUD/NewMedPage';
 
 
 
 
 function App() {
-  // const [user, setUser] = useState({
-  //   username: '',
-  //   password: ''
-  // }); 
-
-  // const [meds, setMeds] = useState({
-  //   dosage: '',
-  //   id: 0,
-  //   name: '',
-  //   unit: '',
-  //   times_per_day: 0,
-  //   times_per_week: 0
-  // });
-
-
-
-  // const [currentUser, setCurrentUser] = useState({medications : [meds]});
-
-  //  // auto-login the current user
-  //  useEffect(()=>{
-  //   fetch('http://localhost:3000/me')
-  //   .then((resp)=>{
-  //     if(resp.ok) resp.json().then(resp=> setCurrentUser(resp));
-  //   })
-  // },[])
-
 
   return (
     <UserProvider>
@@ -48,6 +26,11 @@ function App() {
         <Route 
           path='/'
           element= {<LandingPage/>}
+        />
+
+        <Route
+        path='/blank'
+        element= {<AppHeader/>} 
         />
 
         <Route
@@ -69,7 +52,21 @@ function App() {
           element={<EditPage/>}
           /> 
 
+        <Route 
+          path='/??'
+          element={<Medications/>}
+        />
           <Route
+            path='/???'
+            element={<MedicationForm/>}
+          />
+
+        <Route
+           path='/medication/new'
+          element={<NewMedPage/>}
+          />
+
+        <Route
             path='/appointment/new'
             element = {<AppointmentForm/>}
           /> 

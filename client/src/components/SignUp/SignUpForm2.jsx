@@ -2,24 +2,24 @@ import { useState } from "react";
 
 import { Form, Input, Button } from "antd";
 
-function SignUpFormTwo({setPage, patient, setPatient}){
+function SignUpFormTwo({setPage, signupDet, setSignupDet}){
 
-    // log patient username and password 
+    // log a user's username and password 
     function handleChange(event){
-        setPatient({...patient,
+        setSignupDet({...signupDet,
             [event.target.name] : event.target.value
         });
-        console.log(patient);
+        console.log(signupDet);
     }
 
 
     return(
         <Form layout="inline" style={{margin:'8rem'}}>
             <Form.Item label='Username'>
-                <Input placeholder="Username" name="username" value={patient.username} onChange={handleChange}/>
+                <Input placeholder="Username" name="username" value={signupDet.username} onChange={handleChange}/>
             </Form.Item>
             <Form.Item label='Password'>
-                <Input placeholder="Password" name="password" value={patient.password} onChange={handleChange}/>
+                <Input placeholder="Password" name="password" value={signupDet.password} onChange={handleChange}/>
             </Form.Item>
             <Form.Item>
                 <Button type="primary" onClick={()=> setPage(1)}>Prev</Button>

@@ -1,18 +1,18 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { Layout, Col, Row, Image,  Button, Form, Input } from "antd";
 import AppHeader from "../Header";
 
-import image from '/Users/Xicafelix/Development/code/Phase-4/helping-hands/client/src/Assets/pexels-pixabay-45842.jpg';
-import { UserContext } from "../../Contexts/UserContext";
+import image from '../pexels-kampus-production-7551671.jpg';
+import { UserContext } from "../../Contexts/UserProvider";
 
 const {Header, Content, Footer} = Layout;
 
 
 function LogInPage(){
-
-    const {user, setUser, currentUser, setCurrentUser, setLoggedIn} = useContext(UserContext);
+    const [user, setUser] = useState({});
+    const { currentUser, setCurrentUser, setLoggedIn} = useContext(UserContext);
     const navigate = useNavigate();
 
     const [error, setError] = useState([]);
@@ -38,6 +38,8 @@ function LogInPage(){
         }).then((resp)=>{
             if(resp.ok){
                 resp.json().then((user)=> {
+                    console.log('logged in');
+                    console.log(user);
                     setCurrentUser(user)
                     console.log(currentUser);
                 });
@@ -50,7 +52,6 @@ function LogInPage(){
             }
         });
     };
-
 
     return(
         <Layout>

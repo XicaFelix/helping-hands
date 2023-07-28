@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
 
 import {Layout, Menu, Tabs} from 'antd'
 import TabPane from 'antd/es/tabs/TabPane';
@@ -9,24 +10,17 @@ import MenuItem from 'antd/es/menu/MenuItem';
 import AppHeader from '../Header';
 import Appointment from './Appointment';
 import Medications from './Medications';
-import { useContext } from 'react';
-import { UserContext } from '../../Contexts/UserContext';
+import { UserContext } from '../../Contexts/UserProvider';
+
 
 
 
 function MainPage(){
     const navigate = useNavigate();
-
-    const {currentUser, setCurrentUser, user, setUser, meds, setMeds, setLoggedIn} = useContext(UserContext);
-
-    let medsList;
-    let apptList;
-    console.log(currentUser);
-
-    if(currentUser !== null || currentUser !== {}){
-        medsList = currentUser.medications?.map((medication)=> <Medications key={medication.id} medication={medication} meds={meds} setMeds={setMeds}/>)
-        apptList = currentUser.appointments?.map((appointment)=> <Appointment key={appointment.id} appointment={appointment}/>)
-    }
+    const {currentUser, setCurrentUser, setLoggedIn, selectedMed, setSelectedMed} = useContext(UserContext);
+    console.log('current user, main page', currentUser);
+    let medicationList = currentUser?.medications?.map((medication)=> <Medications medication={medication}/>)
+    let appointmentList = currentUser?.appointments?.map((appointment)=> <Appointment key={appointment.id} appointment={appointment} />)
 
 
 
@@ -38,37 +32,36 @@ function MainPage(){
                 method : "DELETE"
             }).then((resp)=>{
                 if(resp.ok){
-                    setUser({
-                        username: '',
-                        password: ''
-                    })
-                    console.log(resp);
+                    console.log('user logged out');
                     setLoggedIn(false);
+                    console.log(resp);
+                    console.log('current user:', currentUser);
                     navigate('/');
                 }
             })
         }
     };
 
+
     return(
         <Layout>
             <AppHeader/>
             <Layout>
                 <Content>
-                    <h3>Welcome {`${currentUser.person_name}!`}</h3>
+                    {currentUser.person_name ? <h3>{`Welcome ${currentUser.person_name}`} </h3> : <h3>Error Loading User</h3>}
                     <Tabs type='card'>
                         <TabPane tab='Medications' key={1}>
-                        {currentUser !==null ? medsList : <h3> System error</h3>}
+                        {medicationList ? medicationList : <p>Error loading medications</p>}
                         </TabPane>
                         <TabPane tab='Appointments' key={2}>
-                            {currentUser !==null ? apptList : <h3> System error</h3>}
+                            {appointmentList ? appointmentList : <p>Error loading appointments</p>}
                         </TabPane>
                     </Tabs>
                 </Content>
                 <Sider collapsible>
                     <Menu theme='light' mode='inline' onClick={handleSelect}>
                         <MenuItem key={1} onClick={()=> navigate('/home')}> Home</MenuItem>
-                        <MenuItem key={2} onClick={()=> navigate('/edit')}>(+) Medication</MenuItem>
+                        <MenuItem key={2} onClick={()=>navigate('/medication/new')}>(+) Medication</MenuItem>
                         <MenuItem key={3} onClick={()=> navigate('/appointment/new')}> (+) Appointment</MenuItem>
                         <MenuItem key={4}>Profile</MenuItem>
                         <MenuItem key={5}>Logout</MenuItem>
