@@ -47,7 +47,7 @@ function SignUpFormThree({setPage, signupDet, setSignupDet}){
 
     return(
         <>
-        {errors ? <h2>`${errors}`</h2>: null}
+        {errors.length ? <h2>`${errors}`</h2>: null}
         <Form layout='inline' style={{margin:'17rem'}}>
             <Form.Item label='Avatar URL'>
                 <Input placeholder='Avatar URL' name='avatar_url' value={signupDet.avatar_url} onChange={handleChange}/>

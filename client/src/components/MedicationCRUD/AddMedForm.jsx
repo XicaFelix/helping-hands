@@ -99,7 +99,7 @@ function AddMedForm({currentUser, setCurrentUser,allMeds }){
 
     return(
         <Space direction='vertical' size={'large'} style={{margin: '2rem', display: 'block'}}>
-            {errors ? <h2>`${errors}`</h2>: <></>}
+            {errors.length ? <h2>`${errors}`</h2>: <></>}
         <Form>
             <Form.Item label='Medication Name' >
                 <Select value={newMed.name} name='name' onChange={(e)=> setNewMed({...newMed, 'name': e})}>
