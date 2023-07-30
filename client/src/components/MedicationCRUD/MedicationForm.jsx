@@ -44,9 +44,8 @@ function MedicationForm(){
             times_per_week: selectedMed.times_per_week,
             unit: selectedMed.unit
         })
-        // console.log('converted tracker', updatedTracker)
     }, [selectedMed])
-
+ 
     function changeTracker(tracker){
         console.log('change tracker function')
         // exclude the old medication tracker
@@ -67,6 +66,16 @@ function MedicationForm(){
     function handleUpdate(event){
         console.log('patching medication tracker')
         event.preventDefault();
+        Object.values(updatedTracker).forEach((item)=>{
+            if(item === ''){
+                setErrors([...errors, 'Please complete all fields'])
+                console.log('error!')
+            }else{
+                let newErrors = errors.pop()
+                setErrors([...errors, newErrors])
+            }
+        })
+        console.log(errors)
         console.log('updated tracker', updatedTracker);
         fetch(`/medication_trackers/${updatedTracker.id}`,{
             method: "PATCH",
@@ -115,7 +124,7 @@ function MedicationForm(){
                  navigate('/home')
             }else{
                 resp.json().then((error)=>{
-                    setErrors(error.error);
+                    setErrors([...errors, error]);
                     console.log(error.error);
                 });
             };
@@ -125,9 +134,9 @@ function MedicationForm(){
 
     return(
         <Space direction='vertical' size={'large'} style={{margin: '2rem', display: 'block'}}>
-            {errors.length ? <h2>`${errors}`</h2>: <></>}
+            {errors.length ? <h2>{`${errors}`}</h2>: <></>}
         <Form>
-            <Form.Item label='Medication Name' >
+            <Form.Item label='Medication Name'>
                 <Select value={selectedMed.name} name='name' onChange={(e)=> setSelectedMed({...selectedMed, 'name': e})}>
                     {medicationList}
                 </Select>

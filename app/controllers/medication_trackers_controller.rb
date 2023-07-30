@@ -10,13 +10,13 @@ class MedicationTrackersController < ApplicationController
     end
 
     def update
-        tracker = MedicationTracker.find(params[:id])
+        tracker = @current_patient.medication_trackers.find(params[:id])
         tracker.update!(medication_trackers_params)
         render json: tracker
     end
 
     def destroy
-        tracker = MedicationTracker.find(params[:id])
+        tracker = @current_patient.medication_trackers.find(params[:id])
         tracker.destroy
         head :no_content 
     end

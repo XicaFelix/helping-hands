@@ -1,5 +1,5 @@
 class MedicationsController < ApplicationController
-
+skip_before_action :authorize, only: :index
     def index
         render json: Medication.all
     end
@@ -15,7 +15,7 @@ class MedicationsController < ApplicationController
         render json: medication
     end
     
-    def delete
+    def destroy
         medication = Medication.find(params[:id])
         medication.destroy
         head :no_content
@@ -23,7 +23,6 @@ class MedicationsController < ApplicationController
 
     def create
         medication = Medication.create!(medication_params)
-        medication.medication_trackers.create!(patient_id: @current_patient.id)
         render json: medication, status: :created
     end
 
@@ -34,6 +33,6 @@ class MedicationsController < ApplicationController
     end
 
     def medication_params
-        params.require(:medication).permit(:name)
+        params.require(:medication).permit(:name, :patient_id)
     end
 end

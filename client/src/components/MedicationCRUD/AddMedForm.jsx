@@ -2,11 +2,11 @@ import {  useContext, useState} from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Form, Input, Button, Select, Space} from 'antd';
+import { Form, Input, Button, Select, Space, Switch} from 'antd';
 import { UserContext } from '../../Contexts/UserProvider';
 
 
-function AddMedForm({currentUser, setCurrentUser,allMeds }){
+function AddMedForm({currentUser, setCurrentUser,allMeds, setAllMeds }){
     const navigate = useNavigate();
    
 
@@ -14,6 +14,8 @@ function AddMedForm({currentUser, setCurrentUser,allMeds }){
     const [errors, setErrors] = useState([]);
 
     const [newMed, setNewMed] = useState({});
+
+    const [checked, setChecked] = useState(false)
 
     const[updatedTracker, setUpdatedTracker] = useState({
         patient_id: currentUser.id,
@@ -36,6 +38,10 @@ function AddMedForm({currentUser, setCurrentUser,allMeds }){
         console.log('handle change - med', newMed);
     };
 
+    function handleChecked(event){
+        setChecked(event);
+        console.log('checked:', checked);
+    }
     useEffect(()=>{
         const med = allMeds?.find((med)=> med.name === newMed.name)
         let chosenMed = med ? med : 0;
@@ -49,7 +55,7 @@ function AddMedForm({currentUser, setCurrentUser,allMeds }){
             times_per_week: newMed.times_per_week,
             unit: newMed.unit
         })
-        console.log('converted tracker', updatedTracker)
+        // console.log('converted tracker', updatedTracker)
     }, [newMed])
 
    
@@ -70,7 +76,7 @@ function AddMedForm({currentUser, setCurrentUser,allMeds }){
     };
     
 
-// Send post request to database, add newly created medication to current user object
+// Send post request to database, add newly created medication tracker to current user object
     function handleCreate(event){
         event.preventDefault();
     
@@ -95,18 +101,72 @@ function AddMedForm({currentUser, setCurrentUser,allMeds }){
             };
         })
     };
+
+    function addMedication(medication){
+        // update the list of all medications
+        setAllMeds([...allMeds, medication])
+        setChecked(false)
+        setNewMed({...newMed, medicationName: ''})
+    };
+
+    // create a new medication
+    function handleMedicationCreate(event){
+        event.preventDefault();
+        console.log(newMed.medicationName)
+        fetch('/medications', {
+            method : "POST",
+            headers : {"Content-Type": "application/json",},
+            body : JSON.stringify({name: newMed.medicationName, patient_id: currentUser.id}),
+        }).then((response)=>{
+            console.log(response);
+            if(response.ok){
+                response.json().then((medication)=>{
+                    console.log('added med', medication)
+                    addMedication(medication);
+
+                })
+            }else{
+                response.json().then((error)=>{
+                    console.log('error adding med', error)
+                })
+            }
+        })
+    }
     
+    const listOfMeds = (
+        <Form.Item label='Medication Name' >
+            <Select value={newMed.name} name='name' onChange={(e)=> setNewMed({...newMed, 'name': e})}>
+                {medicationList}
+            </Select>
+         </Form.Item>
+    )
+
+    const inputMedField = (
+        <>
+            <Form.Item label='Medication Name'>
+                <Input placeholder='Medication Name' value={newMed.medicationName} name='medicationName' onChange={handleChange}/>
+            </Form.Item>
+            <div>
+                <Button onClick={handleMedicationCreate}>Add to List </Button>
+            </div>
+        </>
+    )
 
     return(
         <Space direction='vertical' size={'large'} style={{margin: '2rem', display: 'block'}}>
             {errors.length ? <h2>`${errors}`</h2>: <></>}
         <Form>
-            <Form.Item label='Medication Name' >
+            {checked ? inputMedField : listOfMeds}
+            {/* <Form.Item label='Medication Name' >
                 <Select value={newMed.name} name='name' onChange={(e)=> setNewMed({...newMed, 'name': e})}>
                     {medicationList}
                 </Select>
             </Form.Item>
-            <Form.Item label='Dosage:'>
+            <Form.Item label='Medication Name'>
+                <Input placeholder='Medication Name' value={newMed.medicationName} name='medicationName' onChange={handleChange}/>
+            </Form.Item> */}
+            <span style={{color: 'blue'}}>Medication not on the list? <Switch onChange={handleChecked} style={{marginBottom: '5px'}} checked={checked}/> </span>
+            <Form.Item label='Dosage:' style={{marginTop: '10px'}}>
                 <Input placeholder='Dosage' value={newMed.dosage} name='dosage' onChange={handleChange}/>
             </Form.Item>
             <Form.Item label='Unit'>

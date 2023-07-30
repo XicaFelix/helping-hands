@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 
-import {Layout, Menu, Tabs} from 'antd'
+import {Avatar, Layout, Menu, Tabs, Space} from 'antd'
 import TabPane from 'antd/es/tabs/TabPane';
 import { Content } from 'antd/es/layout/layout';
 import Sider from 'antd/es/layout/Sider';
@@ -48,7 +48,7 @@ function MainPage(){
             <AppHeader/>
             <Layout>
                 <Content>
-                    {currentUser.person_name ? <h3>{`Welcome ${currentUser.person_name}`} </h3> : <h3>Error Loading User</h3>}
+                    {currentUser.person_name ? <h3>{`Welcome ${currentUser.person_name}!`} </h3> : <h3>Error Loading User</h3>}
                     <Tabs type='card'>
                         <TabPane tab='Medications' key={1}>
                         {medicationList ? medicationList : <p>Error loading medications</p>}
@@ -60,6 +60,9 @@ function MainPage(){
                 </Content>
                 <Sider collapsible>
                     <Menu theme='light' mode='inline' onClick={handleSelect}>
+                        <Space size={5}>
+                            <span style={{fontStyle: 'oblique', fontWeight: 'bolder'}}> <Avatar size={32} src={currentUser.avatar_url} style={{marginLeft: '1rem'}}/> {`${currentUser.person_name}`} </span> 
+                        </Space>
                         <MenuItem key={1} onClick={()=> navigate('/home')}> Home</MenuItem>
                         <MenuItem key={2} onClick={()=>navigate('/medication/new')}>(+) Medication</MenuItem>
                         <MenuItem key={3} onClick={()=> navigate('/appointment/new')}> (+) Appointment</MenuItem>

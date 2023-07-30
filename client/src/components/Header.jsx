@@ -12,7 +12,7 @@ function AppHeader(){
     return(
         <Header style={{height:150}}>
             <div className="logo">
-                <Image width={150} src={'/src/Assets/Helping.png'} preview={false} onClick={()=> navigate('/')}/>
+                <h1 onClick={()=> navigate('/')} style={{color: 'white'}}>Helping Hands</h1>
             </div>
             
         </Header>

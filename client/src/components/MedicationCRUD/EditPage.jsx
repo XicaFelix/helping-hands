@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 
 
-import {Layout, Row, Col, Menu} from 'antd'
+import {Layout, Row, Col, Menu, Space, Avatar} from 'antd'
 import { Content } from 'antd/es/layout/layout';
 import Sider from 'antd/es/layout/Sider';
 import MenuItem from 'antd/es/menu/MenuItem';
@@ -46,6 +46,9 @@ function EditPage(){
                 </Content>
                 <Sider collapsible>
                 <Menu theme='light' mode='inline' onClick={handleSelect}>
+                        <Space size={5}>
+                            <span style={{fontStyle: 'oblique', fontWeight: 'bolder'}}> <Avatar size={32} src={currentUser.avatar_url} style={{marginLeft: '1rem'}}/> {`${currentUser.person_name}`} </span> 
+                        </Space>
                         <MenuItem key={1} onClick={()=> navigate('/home')}> Home</MenuItem>
                         <MenuItem key={2} onClick={()=> navigate('/medication/new')}>(+) Medication</MenuItem>
                         <MenuItem key={3} onClick={()=> navigate('/home')}> Appointments</MenuItem>

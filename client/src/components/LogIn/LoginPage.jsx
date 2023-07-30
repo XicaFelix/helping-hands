@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { Layout, Col, Row, Image,  Button, Form, Input } from "antd";
+import { Layout, Col, Row, Image,  Button, Form, Input, List } from "antd";
 import AppHeader from "../Header";
 
 import image from '../pexels-kampus-production-7551671.jpg';
@@ -16,6 +16,7 @@ function LogInPage(){
     const navigate = useNavigate();
 
     const [error, setError] = useState([]);
+    const [displayError, setDisplayError] = useState(false);
 
 
     // track username and password
@@ -27,6 +28,14 @@ function LogInPage(){
 
     // submit post request to log user in
     function handleSubmit(event){
+        if(user.username || user.password === ''){
+            setError([...error, "Please complete all fields"])
+            setDisplayError(true)
+        }else{
+           let newError = error.pop()
+            setError([...error, newError])
+            setDisplayError(false)
+        }
         event.preventDefault();
         fetch('http://localhost:3000/login',{
             method : "POST",
@@ -46,18 +55,19 @@ function LogInPage(){
                 setLoggedIn(true);
                 navigate('/home');
             }else{
-                resp.json().then((error)=> setError(error.error));
+                resp.json().then((error)=> console.log(error));
                 console.log('post failure')
                 console.log(error);
             }
         });
     };
 
+    let list = error.map((item)=> <List.Item>{item}</List.Item>)
+
     return(
         <Layout>
             <AppHeader/>
             <Content>
-                {error.length ? <h1>`${error}`</h1> :<h1>Be the #1 Caregiver</h1>}
                 <Row>
                     <Col span={11} style={{marginLeft:'2rem', marginRight: '2rem'}}>
                             <Image src={image} alt="login-page" preview={false}/>
@@ -70,6 +80,7 @@ function LogInPage(){
                             <Form.Item label='Password'>
                                 <Input placeholder='Password' name="password" value={user.password} type={'password'} onChange={handleChange}/>
                             </Form.Item>
+                            {displayError ? <List>{list}</List> : null}
                             <Form.Item>
                                 <Button style={{marginLeft: '20rem', minWidth: '6rem', minHeight:'3rem'}} onClick={handleSubmit}>Login</Button>
                             </Form.Item>

@@ -5,7 +5,6 @@ const UserContext = createContext({});
 const UserProvider = ({children}) => {
 
     const [currentUser, setCurrentUser] = useState({});
-    const [userMeds, setUserMeds] = useState([currentUser.medications]);
     const [loggedIn, setLoggedIn] = useState(false);
     const [allMeds, setAllMeds] = useState([]);
     const [selectedMed, setSelectedMed] = useState({
@@ -21,7 +20,7 @@ const UserProvider = ({children}) => {
    
 
 
-    return <UserContext.Provider value={{currentUser, setCurrentUser, loggedIn, setLoggedIn, selectedMed, setSelectedMed, userMeds, setUserMeds, allMeds, setAllMeds}}>{children}</UserContext.Provider>
+    return <UserContext.Provider value={{currentUser, setCurrentUser, loggedIn, setLoggedIn, selectedMed, setSelectedMed, allMeds, setAllMeds}}>{children}</UserContext.Provider>
 
 
 

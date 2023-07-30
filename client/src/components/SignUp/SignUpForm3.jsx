@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 import {Form, Button, Input} from 'antd';
@@ -10,6 +11,8 @@ function SignUpFormThree({setPage, signupDet, setSignupDet}){
 
     // keep track of sign up errors
     const [errors, setErrors]= useState([]);
+
+    const navigate = useNavigate();
 
     function handleSubmit(event){
         event.preventDefault();
@@ -26,6 +29,7 @@ function SignUpFormThree({setPage, signupDet, setSignupDet}){
                         setCurrentUser(user);
                         setLoggedIn(true);
                         console.log('currentUser:', currentUser);
+                        navigate('/home')
                     });
                 }else{
                     resp.json().then((error)=>{
