@@ -29,7 +29,6 @@ function App() {
         />
 
         <Route
-        path='/blank'
         element= {<AppHeader/>} 
         />
 
@@ -53,11 +52,9 @@ function App() {
           /> 
 
         <Route 
-          path='/??'
           element={<Medications/>}
         />
           <Route
-            path='/???'
             element={<MedicationForm/>}
           />
 

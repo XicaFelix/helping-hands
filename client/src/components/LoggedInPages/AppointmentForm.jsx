@@ -35,9 +35,9 @@ function AppointmentForm(){
 
     function addAppt(appointment){
         const userAppts = [...currentUser.appointments, appointment]
-        setCurrentUser({...currentUser, appointments: userAppts})
+        setCurrentUser((currentUser)=>({...currentUser, appointments: userAppts}))
         console.log('new appt:', userAppts)
-        navigate('home');
+        navigate('/home');
     };
 
     function handleCreate(event){

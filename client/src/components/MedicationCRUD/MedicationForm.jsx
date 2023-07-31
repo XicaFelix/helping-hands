@@ -59,7 +59,7 @@ function MedicationForm(){
         const newTrackers = currentUser.medication_trackers
         let updatedUser = {...currentUser, newTrackers}
         console.log('updated user', updatedUser)
-        setCurrentUser({...currentUser, updatedUser})
+        setCurrentUser((currentUser)=>(updatedUser))
 
     };
 
@@ -73,31 +73,31 @@ function MedicationForm(){
             }else{
                 let newErrors = errors.pop()
                 setErrors([...errors, newErrors])
-            }
-        })
-        console.log(errors)
-        console.log('updated tracker', updatedTracker);
-        fetch(`/medication_trackers/${updatedTracker.id}`,{
-            method: "PATCH",
-            headers : {"Content-Type" : "application/json",},
-            body : JSON.stringify(updatedTracker),
-        }).then((resp)=>{
-            console.log(resp);
-            if(resp.ok){
-                resp.json().then(((tracker)=>{
-                    console.log('patched tracker - new tracker', tracker)
-                    changeTracker(tracker)
-                     navigate('/home');
-                }))
-            }else{
-                resp.json().then((resp)=>{
+                console.log(errors)
+                console.log('updated tracker', updatedTracker);
+                fetch(`/medication_trackers/${updatedTracker.id}`,{
+                    method: "PATCH",
+                    headers : {"Content-Type" : "application/json",},
+                    body : JSON.stringify(updatedTracker),
+                }).then((resp)=>{
                     console.log(resp);
-                    setErrors(resp.errors);
-                    console.log('patch failure');
-                    console.log(errors);
-                });
-            }
-        })
+                    if(resp.ok){
+                        resp.json().then(((tracker)=>{
+                            console.log('patched tracker - new tracker', tracker)
+                            changeTracker(tracker)
+                            navigate('/home');
+                        }))
+                    }else{
+                        resp.json().then((resp)=>{
+                            console.log(resp);
+                            setErrors(resp.errors);
+                            console.log('patch failure');
+                            console.log(errors);
+                        });
+                    }
+                })
+                    }
+                })
     };
 
     function deleteTracker(){
@@ -110,7 +110,7 @@ function MedicationForm(){
         //  update the tracker and medication arrays
         const updatedTrackers = [...currentUser.medication_trackers, filteredTrackers]
         // update the current user
-        setCurrentUser({...currentUser, medication_trackers: updatedTrackers, medications: filteredMeds})
+        setCurrentUser((currentUser)=>({...currentUser, medication_trackers: updatedTrackers, medications: filteredMeds}))
         console.log('updated user', currentUser)
     };
 

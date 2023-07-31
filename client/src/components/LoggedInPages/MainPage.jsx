@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import {Avatar, Layout, Menu, Tabs, Space} from 'antd'
 import TabPane from 'antd/es/tabs/TabPane';
@@ -17,12 +17,10 @@ import { UserContext } from '../../Contexts/UserProvider';
 
 function MainPage(){
     const navigate = useNavigate();
-    const {currentUser, setCurrentUser, setLoggedIn, selectedMed, setSelectedMed} = useContext(UserContext);
+    const {currentUser, setCurrentUser, setLoggedIn} = useContext(UserContext);
     console.log('current user, main page', currentUser);
     let medicationList = currentUser?.medications?.map((medication)=> <Medications medication={medication}/>)
     let appointmentList = currentUser?.appointments?.map((appointment)=> <Appointment key={appointment.id} appointment={appointment} />)
-
-
 
     function handleSelect(event){
        

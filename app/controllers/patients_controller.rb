@@ -7,12 +7,16 @@ class PatientsController < ApplicationController
 
     def create
         patient = Patient.create!(patient_params)
-        session[:patient_id] = patient.id
+        session[:user_id] = patient.id
         render json: patient, status: :created
     end
 
     def show
-        render json: @current_patient
+        if @current_patient === nil
+            render json: {error: 'no logged in user found'}
+        else
+            render json: @current_patient
+        end
     end
 
     private

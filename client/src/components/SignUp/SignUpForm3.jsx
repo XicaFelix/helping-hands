@@ -26,7 +26,7 @@ function SignUpFormThree({setPage, signupDet, setSignupDet}){
                 if(resp.ok){
                     resp.json().then((user)=> {
                         console.log(user);
-                        setCurrentUser(user);
+                        setCurrentUser((currentUser)=>(user));
                         setLoggedIn(true);
                         console.log('currentUser:', currentUser);
                         navigate('/home')

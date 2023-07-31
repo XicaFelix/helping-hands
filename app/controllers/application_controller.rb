@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
   private
 
   def authorize
-    @current_patient = Patient.find_by(id: session[:patient_id])
+    @current_patient = Patient.find_by(id: session[:user_id])
   end
 
   def unprocessable_entity_response(exception)

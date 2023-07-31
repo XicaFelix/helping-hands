@@ -52,7 +52,7 @@ function NewMedPage(){
                         </Space>
                         <MenuItem key={1} onClick={()=> navigate('/home')}> Home</MenuItem>
                         <MenuItem key={2} onClick={()=> navigate('/medication/new')}>(+) Medication</MenuItem>
-                        <MenuItem key={3} onClick={()=> navigate('/home')}> Appointments</MenuItem>
+                        <MenuItem key={3} onClick={()=> navigate('/appointment/new')}>(+)Appointments</MenuItem>
                         <MenuItem key={4}>Profile</MenuItem>
                         <MenuItem key={5}>Logout</MenuItem>
                     </Menu>

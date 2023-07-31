@@ -15,8 +15,8 @@ function LogInPage(){
     const { currentUser, setCurrentUser, setLoggedIn} = useContext(UserContext);
     const navigate = useNavigate();
 
-    const [error, setError] = useState([]);
-    const [displayError, setDisplayError] = useState(false);
+    // can convert this to an empty string instead, since only one error would occur for this page
+    const [error, setError] = useState('');
 
 
     // track username and password
@@ -28,16 +28,12 @@ function LogInPage(){
 
     // submit post request to log user in
     function handleSubmit(event){
-        if(user.username || user.password === ''){
-            setError([...error, "Please complete all fields"])
-            setDisplayError(true)
+        console.log('user', user)
+        if(!user.username || !user.password){
+            setError('Invalid username and password combination')
         }else{
-           let newError = error.pop()
-            setError([...error, newError])
-            setDisplayError(false)
-        }
-        event.preventDefault();
-        fetch('http://localhost:3000/login',{
+            setError('')
+             fetch('http://localhost:3000/login',{
             method : "POST",
             headers: {
                 "Content-Type" : "application/json",
@@ -49,20 +45,21 @@ function LogInPage(){
                 resp.json().then((user)=> {
                     console.log('logged in');
                     console.log(user);
-                    setCurrentUser(user)
+                    setCurrentUser((currentUser)=>(user))
                     console.log(currentUser);
                 });
                 setLoggedIn(true);
                 navigate('/home');
             }else{
-                resp.json().then((error)=> console.log(error));
+                resp.json().then((data)=> setError(data.error));
                 console.log('post failure')
-                console.log(error);
             }
         });
+        }
+        event.preventDefault();
     };
 
-    let list = error.map((item)=> <List.Item>{item}</List.Item>)
+    // let list = error.map((item)=> <List.Item>{item}</List.Item>)
 
     return(
         <Layout>
@@ -80,7 +77,7 @@ function LogInPage(){
                             <Form.Item label='Password'>
                                 <Input placeholder='Password' name="password" value={user.password} type={'password'} onChange={handleChange}/>
                             </Form.Item>
-                            {displayError ? <List>{list}</List> : null}
+                            {error ? <List><List.Item>{error}</List.Item></List> : null}
                             <Form.Item>
                                 <Button style={{marginLeft: '20rem', minWidth: '6rem', minHeight:'3rem'}} onClick={handleSubmit}>Login</Button>
                             </Form.Item>

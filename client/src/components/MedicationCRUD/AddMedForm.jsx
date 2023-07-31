@@ -2,7 +2,7 @@ import {  useContext, useState} from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Form, Input, Button, Select, Space, Switch} from 'antd';
+import { Form, Input, Button, Select, Space, Switch, List} from 'antd';
 import { UserContext } from '../../Contexts/UserProvider';
 
 
@@ -11,7 +11,7 @@ function AddMedForm({currentUser, setCurrentUser,allMeds, setAllMeds }){
    
 
     //  keep track of any response errors
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState();
 
     const [newMed, setNewMed] = useState({});
 
@@ -70,7 +70,7 @@ function AddMedForm({currentUser, setCurrentUser,allMeds, setAllMeds }){
         const updatedTrackers = [...currentUser.medication_trackers, tracker]
         console.log('adding tracker to array', updatedTrackers);
         // update the current user
-        setCurrentUser({...currentUser, medication_trackers: updatedTrackers, medications: updatedMeds})
+        setCurrentUser((currentUser)=>({...currentUser, medication_trackers: updatedTrackers, medications: updatedMeds}))
         console.log('updated user', currentUser)
         navigate('/home');
     };
@@ -92,15 +92,18 @@ function AddMedForm({currentUser, setCurrentUser,allMeds, setAllMeds }){
                     addTracker(tracker);
                 }))
             }else{
-                resp.json().then((error)=>{
-                    console.log(error);
-                    setErrors(resp.error);
+                resp.json().then((data)=>{
+                    let errorsArr = []
+                     data.errors?.map((item)=> errorsArr.push(item))
+                    console.log('error array', errorsArr)
+                    setErrors(errorsArr);
                     console.log('post failure');
-                    console.log(errors);
                 });
             };
         })
     };
+
+    let errorsList = errors?.map((error)=> <li key={error.index} style={{color: 'red'}}>{error}</li>)
 
     function addMedication(medication){
         // update the list of all medications
@@ -126,8 +129,9 @@ function AddMedForm({currentUser, setCurrentUser,allMeds, setAllMeds }){
 
                 })
             }else{
-                response.json().then((error)=>{
-                    console.log('error adding med', error)
+                response.json().then((data)=>{
+                    console.log('error adding med', data)
+                    setErrors(data.errors)
                 })
             }
         })
@@ -152,19 +156,18 @@ function AddMedForm({currentUser, setCurrentUser,allMeds, setAllMeds }){
         </>
     )
 
+    const displayErrors = (
+        <>
+            <h3 style={{color: 'red'}}>Errors:</h3>
+            {<ul>
+                {errorsList} 
+            </ul>}
+        </>
+    )
     return(
         <Space direction='vertical' size={'large'} style={{margin: '2rem', display: 'block'}}>
-            {errors.length ? <h2>`${errors}`</h2>: <></>}
         <Form>
             {checked ? inputMedField : listOfMeds}
-            {/* <Form.Item label='Medication Name' >
-                <Select value={newMed.name} name='name' onChange={(e)=> setNewMed({...newMed, 'name': e})}>
-                    {medicationList}
-                </Select>
-            </Form.Item>
-            <Form.Item label='Medication Name'>
-                <Input placeholder='Medication Name' value={newMed.medicationName} name='medicationName' onChange={handleChange}/>
-            </Form.Item> */}
             <span style={{color: 'blue'}}>Medication not on the list? <Switch onChange={handleChecked} style={{marginBottom: '5px'}} checked={checked}/> </span>
             <Form.Item label='Dosage:' style={{marginTop: '10px'}}>
                 <Input placeholder='Dosage' value={newMed.dosage} name='dosage' onChange={handleChange}/>
@@ -185,6 +188,7 @@ function AddMedForm({currentUser, setCurrentUser,allMeds, setAllMeds }){
             <Space align='center' style={{margin: 'auto', width:'50%'}}>
                 <Button onClick={handleCreate}>Add</Button>
             </Space>
+            {errors ? displayErrors : null}
         </Form>
         </Space>
     );

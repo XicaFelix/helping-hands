@@ -1,5 +1,5 @@
 class Medication < ApplicationRecord
-    validates :name, uniqueness: true
+    validates :name, uniqueness: true, presence: true
 
 
     has_many :medication_trackers

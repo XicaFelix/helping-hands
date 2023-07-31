@@ -18,6 +18,11 @@ const UserProvider = ({children}) => {
         .then(resp=> setAllMeds(resp))
       }, [])
    
+      useEffect(()=>{
+        fetch('/me')
+        .then((resp)=>resp.json())
+        .then((user)=>console.log('current user', user))
+      },[])
 
 
     return <UserContext.Provider value={{currentUser, setCurrentUser, loggedIn, setLoggedIn, selectedMed, setSelectedMed, allMeds, setAllMeds}}>{children}</UserContext.Provider>
